@@ -1,10 +1,10 @@
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { useEffect } from 'react'
 import { useStudy } from '../hooks/useStudy'
-import { styles } from '../themes'
 import StudyLabel from './StudyLabel'
 import { useClock } from '../hooks/useClock'
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
+import ClockText from './ClockText'
 
 export default function Clock() {
   const study = useStudy()
@@ -48,13 +48,7 @@ export default function Clock() {
             {({ remainingTime }) => {
               return (
                 <View style={{ alignItems: 'center' }}>
-                  <Text style={styles.text}>
-                    {`${
-                      Math.floor(remainingTime / 60) < 10 ? '0' : ''
-                    }${Math.floor(remainingTime / 60)}:${
-                      remainingTime % 60 < 10 ? '0' : ''
-                    }${(remainingTime % 60).toString()}`}
-                  </Text>
+                  <ClockText time={remainingTime} />
                   <StudyLabel />
                 </View>
               )
@@ -63,13 +57,7 @@ export default function Clock() {
         </View>
       ) : (
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ color: 'white' }}>
-            {`${Math.floor(clock.time / 60) < 10 ? '0' : ''}${Math.floor(
-              clock.time / 60,
-            )}:${clock.time % 60 < 10 ? '0' : ''}${(
-              clock.time % 60
-            ).toString()}`}
-          </Text>
+          <ClockText time={clock.time} />
           <StudyLabel />
         </View>
       )}
