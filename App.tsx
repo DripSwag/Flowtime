@@ -8,24 +8,27 @@ import {
 import Clock from './components/Clock'
 import StartButton from './components/StartButton'
 import FinishButton from './components/FinishButton'
-import ContextStore from './hooks/useStudy'
+import StudyContext from './hooks/useStudy'
+import ClockContext from './hooks/useClock'
 
 export default function App() {
   return (
-    <ContextStore>
-      <SafeAreaView style={[styles.container, styles.background]}>
-        <View style={[styles.container, styles.spaceBetween, styles.hero]}>
-          <StatusBar barStyle='default'></StatusBar>
-          <View style={styles.clock}>
-            <Clock />
+    <StudyContext>
+      <ClockContext>
+        <SafeAreaView style={[styles.container, styles.background]}>
+          <View style={[styles.container, styles.spaceBetween, styles.hero]}>
+            <StatusBar barStyle='default'></StatusBar>
+            <View style={styles.clock}>
+              <Clock />
+            </View>
+            <View style={styles.horizontal}>
+              <StartButton />
+              <FinishButton />
+            </View>
           </View>
-          <View style={styles.horizontal}>
-            <StartButton />
-            <FinishButton />
-          </View>
-        </View>
-      </SafeAreaView>
-    </ContextStore>
+        </SafeAreaView>
+      </ClockContext>
+    </StudyContext>
   )
 }
 

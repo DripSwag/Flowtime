@@ -28,7 +28,7 @@ interface Context {
   study: Function
 }
 
-export default function ContextStore({ children }) {
+export default function StudyContext({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const value: Context = {
