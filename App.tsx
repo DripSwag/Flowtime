@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    maxHeight: 200,
+    maxHeight: 300,
     flexGrow: 1,
-    maxWidth: 200,
+    maxWidth: 300,
   },
   horizontal: {
     flexDirection: 'row',

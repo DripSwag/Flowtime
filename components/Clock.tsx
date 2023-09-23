@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useStudy } from '../hooks/useStudy'
 import StudyLabel from './StudyLabel'
 import { useClock } from '../hooks/useClock'
@@ -9,6 +9,7 @@ import ClockText from './ClockText'
 export default function Clock() {
   const study = useStudy()
   const clock = useClock()
+  const [width, setWidth] = useState(180)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,9 +25,13 @@ export default function Clock() {
     <View
       style={{
         width: '100%',
+        height: '100%',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+      }}
+      onLayout={data => {
+        setWidth(data.nativeEvent.layout.width)
       }}
     >
       {!study.isStudy ? (
@@ -34,6 +39,7 @@ export default function Clock() {
           <CountdownCircleTimer
             key={0}
             isPlaying={study.isRunning}
+            size={width}
             duration={clock.duration}
             rotation='counterclockwise'
             strokeWidth={6}
