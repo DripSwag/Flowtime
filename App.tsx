@@ -21,7 +21,7 @@ export default function App() {
             <View style={styles.clock}>
               <Clock />
             </View>
-            <View style={styles.horizontal}>
+            <View style={[styles.horizontal]}>
               <StartButton />
               <FinishButton />
             </View>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   hero: {
-    paddingVertical: 12,
+    paddingVertical: 16,
   },
   background: {
     backgroundColor: 'black',
@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
   },
   horizontal: {
     flexDirection: 'row',
-    gap: 4,
+    gap: 16,
   },
 })

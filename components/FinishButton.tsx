@@ -1,7 +1,8 @@
-import { Button } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import { useClock } from '../hooks/useClock'
 import { useStudy } from '../hooks/useStudy'
 import { ToastAndroid } from 'react-native'
+import { styles } from '../themes'
 
 export default function FinishButton() {
   const study = useStudy()
@@ -20,5 +21,13 @@ export default function FinishButton() {
     return <></>
   }
 
-  return <Button title='Finish' onPress={handleClick}></Button>
+  return (
+    <TouchableOpacity
+      onPress={handleClick}
+      style={[{ backgroundColor: '#2c2c2c' }, styles.container, styles.btn]}
+      activeOpacity={0.8}
+    >
+      <Text style={styles.btnText}>Finish</Text>
+    </TouchableOpacity>
+  )
 }
