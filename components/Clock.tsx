@@ -1,7 +1,6 @@
-import { View } from 'react-native'
+import { View, Vibration } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useStudy } from '../hooks/useStudy'
-import StudyLabel from './StudyLabel'
 import { useClock } from '../hooks/useClock'
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import ClockText from './ClockText'
@@ -10,6 +9,11 @@ export default function Clock() {
   const study = useStudy()
   const clock = useClock()
   const [width, setWidth] = useState(180)
+
+  function handleComplete() {
+    study.study()
+    Vibration.vibrate(1000)
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -47,9 +51,7 @@ export default function Clock() {
             colors={['#ffffff', '#ffffff']}
             trailColor='#000000'
             colorsTime={[0, 1]}
-            onComplete={() => {
-              study.study()
-            }}
+            onComplete={handleComplete}
           >
             {({ remainingTime }) => {
               return (
