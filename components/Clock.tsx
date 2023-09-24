@@ -55,7 +55,6 @@ export default function Clock() {
               return (
                 <View style={{ alignItems: 'center' }}>
                   <ClockText time={remainingTime} />
-                  <StudyLabel />
                 </View>
               )
             }}
@@ -64,7 +63,6 @@ export default function Clock() {
       ) : (
         <View style={{ alignItems: 'center' }}>
           <ClockText time={clock.time} />
-          <StudyLabel />
         </View>
       )}
     </View>
