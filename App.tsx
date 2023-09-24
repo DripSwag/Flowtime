@@ -11,6 +11,8 @@ import FinishButton from './components/FinishButton'
 import StudyContext from './hooks/useStudy'
 import ClockContext from './hooks/useClock'
 
+//https://realtimecolors.com/?colors=f7f5f9-020203-6009f6-191d11-5aa097
+
 export default function App() {
   return (
     <StudyContext>
