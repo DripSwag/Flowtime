@@ -19,7 +19,10 @@ export default function App() {
       <ClockContext>
         <SafeAreaView style={[styles.container, styles.background]}>
           <View style={[styles.container, styles.spaceBetween, styles.hero]}>
-            <StatusBar barStyle='default'></StatusBar>
+            <StatusBar
+              barStyle='default'
+              backgroundColor={'#000000'}
+            ></StatusBar>
             <View style={styles.clock}>
               <Clock />
             </View>
