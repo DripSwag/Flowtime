@@ -7,7 +7,9 @@ import {
   useState,
 } from 'react'
 import { AppState, AppStateStatus } from 'react-native'
+import useNotification, { TriggerNotification } from './useNotifications'
 import { useStudy } from './useStudy'
+import * as Notifications from 'expo-notifications'
 
 interface Clock {
   time: number
@@ -34,6 +36,7 @@ export default function ClockContext({ children }) {
   const [closeDate, setCloseDate] = useState<number>()
   const appState = useRef(AppState.currentState)
   const study = useStudy()
+  const notifications = useNotification()
 
   function reducer(
     state: Clock,
@@ -57,11 +60,19 @@ export default function ClockContext({ children }) {
 
   function handleAppStateChange(state: AppStateStatus) {
     if (appState.current.match(/inactive|background/) && state === 'active') {
+      if (study.isRunning) {
+        Notifications.dismissAllNotificationsAsync()
+      }
       if (study.isRunning && study.isStudy) {
         const timeDifference = Math.ceil((Date.now() - closeDate) / 1000)
         dispatch({ type: 'foreground', addedTime: timeDifference })
       }
+      //If going to inactive
     } else {
+      if (study.isRunning) {
+        TriggerNotification()
+      }
+
       if (study.isRunning && study.isStudy) {
         setCloseDate(Date.now())
       }
