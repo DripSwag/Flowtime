@@ -15,6 +15,10 @@ export default function Clock() {
     Vibration.vibrate(1000)
   }
 
+  function handleUpdate(remainingTime: number) {
+    clock.setTime(remainingTime)
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (study.isRunning && study.isStudy) {
@@ -52,6 +56,7 @@ export default function Clock() {
             trailColor='#000000'
             colorsTime={[0, 1]}
             onComplete={handleComplete}
+            onUpdate={handleUpdate}
           >
             {({ remainingTime }) => {
               return (

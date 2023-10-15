@@ -29,12 +29,17 @@ export default function useNotification() {
   }, [])
 }
 
-export async function TriggerNotification() {
+interface NotificationPayload {
+  body: string
+  trigger: Notifications.NotificationTriggerInput
+}
+
+export async function TriggerNotification(payload: NotificationPayload) {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: 'Flowtime',
-      body: 'Your clock is still running',
+      body: payload.body,
     },
-    trigger: null,
+    trigger: payload.trigger,
   })
 }

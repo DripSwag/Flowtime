@@ -27,6 +27,7 @@ interface Context {
   increment: Function
   decrement: Function
   divide: Function
+  setTime: Function
 }
 
 const Context = createContext(initialState)
@@ -40,7 +41,7 @@ export default function ClockContext({ children }) {
 
   function reducer(
     state: Clock,
-    payload: { type: string; addedTime?: number },
+    payload: { type: string; addedTime?: number; newTime?: number },
   ) {
     switch (payload.type) {
       case 'increment':
@@ -55,13 +56,21 @@ export default function ClockContext({ children }) {
           time: state.time + payload.addedTime,
           duration: state.duration,
         }
+      case 'setTime':
+        return { time: payload.newTime, duration: state.duration }
     }
   }
 
-  function handleAppStateChange(state: AppStateStatus) {
-    if (appState.current.match(/inactive|background/) && state === 'active') {
+  function handleAppStateChange(newState: AppStateStatus) {
+    //Messy
+    //If goint to active
+    if (
+      appState.current.match(/inactive|background/) &&
+      newState === 'active'
+    ) {
       if (study.isRunning) {
         Notifications.dismissAllNotificationsAsync()
+        Notifications.cancelAllScheduledNotificationsAsync()
       }
       if (study.isRunning && study.isStudy) {
         const timeDifference = Math.ceil((Date.now() - closeDate) / 1000)
@@ -70,14 +79,21 @@ export default function ClockContext({ children }) {
       //If going to inactive
     } else {
       if (study.isRunning) {
-        TriggerNotification()
+        TriggerNotification({
+          body: 'Your clock is still running',
+          trigger: null,
+        })
+        TriggerNotification({
+          body: 'Your rest time has finished',
+          trigger: { seconds: state.time },
+        })
       }
 
       if (study.isRunning && study.isStudy) {
         setCloseDate(Date.now())
       }
     }
-    appState.current = state
+    appState.current = newState
   }
 
   useEffect(() => {
@@ -94,6 +110,7 @@ export default function ClockContext({ children }) {
     increment: () => dispatch({ type: 'increment' }),
     decrement: () => dispatch({ type: 'decrement' }),
     divide: () => dispatch({ type: 'divide' }),
+    setTime: (time: number) => dispatch({ type: 'setTime', newTime: time }),
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>
