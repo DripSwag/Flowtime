@@ -9,7 +9,7 @@ export default function FinishButton() {
   const clock = useClock()
 
   function handleClick() {
-    if (clock.time > 3) {
+    if (clock.time / clock.ratio >= 1) {
       clock.divide()
       study.study()
     } else {

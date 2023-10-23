@@ -10,19 +10,29 @@ import StartButton from './components/StartButton'
 import FinishButton from './components/FinishButton'
 import StudyContext from './hooks/useStudy'
 import ClockContext from './hooks/useClock'
+import Cog from './Svg/Cog'
+import { useState } from 'react'
+import SettingsModal from './components/SettingsModal'
 
 //https://realtimecolors.com/?colors=f7f5f9-020203-6009f6-191d11-5aa097
 
 export default function App() {
+  const [modalVisible, setModalVisible] = useState(false)
+
   return (
     <StudyContext>
       <ClockContext>
+        <SettingsModal
+          visible={modalVisible}
+          hideModal={() => setModalVisible(false)}
+        />
         <SafeAreaView style={[styles.container, styles.background]}>
           <View style={[styles.container, styles.spaceBetween, styles.hero]}>
             <StatusBar
               barStyle='default'
               backgroundColor={'#000000'}
             ></StatusBar>
+            <Cog enableModal={() => setModalVisible(true)} />
             <View style={styles.clock}>
               <Clock />
             </View>
@@ -50,6 +60,7 @@ const styles = StyleSheet.create({
   background: {
     backgroundColor: 'black',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    paddingHorizontal: 16,
   },
   spaceBetween: {
     justifyContent: 'space-between',
